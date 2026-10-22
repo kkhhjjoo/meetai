@@ -20,7 +20,9 @@ const formSchema = z.object({
     email: z.string().email({
         message: '올바른 이메일을 입력해주세요.'
     }),
-    password: z.string().min(1, { message: "비밀번호는 필수입니다."}),
+    password: z.string()
+        .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
+        .max(128, { message: "비밀번호는 128자 이하여야 합니다." }),
     confirmPassword: z.string().min(1, { message: "비밀번호는 필수입니다."})
 })
 .refine((data) => data.password === data.confirmPassword, {
