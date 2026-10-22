@@ -50,7 +50,8 @@ export const LoginView = () => {
                     router.push("/");
                 },
                 onError: ({error}) => {
-                    setError(error.message)
+                    setError(error.message);
+                    setPending(false);
                 }
             }
         );
