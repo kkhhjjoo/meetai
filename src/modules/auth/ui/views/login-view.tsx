@@ -11,6 +11,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from "@/components/ui/card";
 import {Alert, AlertTitle} from '@/components/ui/alert'
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form'
+import { FaGoogle } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -131,16 +134,29 @@ export const LoginView = () => {
                                         variant='outline'
                                         type="button"
                                         className='w-full'
+                                        onClick={() => {
+                                            authClient.signIn.social({
+                                                provider: "google"
+                                            },
+                                        {
+                                        onError: ({error}) => setError(error.message)
+                                        })
+                                        }}
                                     >
-                                        Google
+                                        <FaGoogle />
                                     </Button>
                                     <Button
                                         disabled={pending}
                                         variant='outline'
                                         type="button"
                                         className='w-full'
+                                        onClick={() => {
+                                            authClient.signIn.social({
+                                                provider: "github"
+                                            })
+                                        }}
                                     >
-                                        Github
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className='text-center text-sm'>
