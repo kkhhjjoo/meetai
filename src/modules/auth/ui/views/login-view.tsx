@@ -56,7 +56,28 @@ export const LoginView = () => {
             }
         );
 
-        
+
+    }
+
+    const onSocial = (provider: "github" | "google") => {
+        setError(null);
+        setPending(true);
+
+        authClient.signIn.social(
+            {
+                provider,
+                callbackURL: "/",
+            },
+            {
+                onSuccess: () => {
+                    setPending(false);
+                },
+                onError: ({error}) => {
+                    setError(error.message);
+                    setPending(false);
+                }
+            }
+        );
     }
     return (
         <div className="flex flex-col gap-6">
@@ -128,6 +149,7 @@ export const LoginView = () => {
                                 <div className='grid grid-cols-2 gap-4'>
                                     <Button
                                         disabled={pending}
+                                        onClick={() => onSocial("google")}
                                         variant='outline'
                                         type="button"
                                         className='w-full'
@@ -136,6 +158,7 @@ export const LoginView = () => {
                                     </Button>
                                     <Button
                                         disabled={pending}
+                                        onClick={() => onSocial("github")}
                                         variant='outline'
                                         type="button"
                                         className='w-full'
@@ -150,7 +173,7 @@ export const LoginView = () => {
                             </div>
                         </form>
                     </Form>
-                    <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+                    <div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
                         <p className="text-2xl font-semibold text-white">
                             <img src="/logo.svg" alt="Image" className="h-[92px] w-[92px]" />
                             Meet.AI
